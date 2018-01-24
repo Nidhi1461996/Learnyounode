@@ -4,7 +4,7 @@
   "description": "",
   "main": ".eslintrc.js",
   "scripts": {
-    "test": "jest helloWorld.test.js"
+    "test": "jest babySteps.test.js"
   },
   "author": "",
   "license": "ISC",
