@@ -1,6 +1,7 @@
 const babySteps = require('./babySteps');
 
 describe('Testing all possible valid inputs', () => {
+  
   test('All positive numbers', () =>{
     expect(babySteps(['1','2','3'])).toBe(6);
   });
