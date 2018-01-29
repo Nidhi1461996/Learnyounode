@@ -1,23 +1,11 @@
-const http = require('http');
+const fs = require('fs');
 
-const accessHTTPAsyncCollect = (getURL, testCallback) => {
-  // let getURL = process.argv[2];
-  http.get(getURL, (response) => {
-    response.setEncoding('UTF8');
-    let retData = '';
-    response.on('data', (data) => {
-      retData += data.toString();
-    });
-    response.on('end', (end) => {
-      console.log(retData.length);
-      console.log(retData);
-      testCallback(null, 'SUCCESS');
-    });
-    response.on('error', (error) => {
-      console.log(error);
-      testCallback(null, '404 Not Found');
-    });
+const accessFileAsync = (filepath, testCallback) => {
+  fs.readFile(filepath, 'utf8', (error, fileContent) => {
+    if (error) {
+      return testCallback(error.code);
+    }
+    return testCallback(fileContent.split('\n').length - 1);
   });
 };
-// accessHTTPAsyncCollect();
-module.exports = accessHTTPAsyncCollect;
+module.exports = accessFileAsync;
