@@ -1,14 +1,18 @@
-const fs = require('fs');
-const path = require('path');
+const getFilesAsync = require('./makeItModular');
 
-module.exports = function (dir, filterStr, callback) {
-  fs.readdir(dir, (err, list) => {
+const logToConsole = (dirPath, extension, testCallback) => {
+  // let dirPath = process.argv[2];
+  // let extension = process.argv[3];
+  getFilesAsync(dirPath, extension, (err, data) => {
     if (err) {
-      return callback(err);
+      console.log(err.code);
+      testCallback(err);
+    } else {
+      // data.forEach(element => console.log(element));
+      console.log(data.toString());
+      testCallback(null, data);
     }
-
-    list = list.filter(file => path.extname(file) === `.${filterStr}`);
-
-    callback(null, list);
   });
 };
+// logToConsole();
+module.exports = logToConsole;

@@ -1,14 +1,15 @@
-const filterFn = require('./module.js');
+const fs = require('fs');
+const path = require('path');
 
-const dir = process.argv[2];
-const filterStr = process.argv[3];
-
-filterFn(dir, filterStr, (err, list) => {
-  if (err) {
-    return console.error('There was an error:', err);
-  }
-
-  list.forEach((file) => {
-    console.log(file);
+const accessDirAsync = (dirPath, fileType, printCallback) => {
+  fs.readdir(dirPath, 'utf8', (error, fileList) => {
+    if (error) {
+      return printCallback(error);
+    }
+    const retrievedFiles = fileList
+      .filter(filename => path.extname(filename) === `.${fileType}`);
+    return printCallback(null, retrievedFiles);
   });
-});
+};
+
+module.exports = accessDirAsync;
